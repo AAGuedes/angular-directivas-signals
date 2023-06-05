@@ -16,17 +16,17 @@
     </button>
   </div>
 
-  <div *ngIf="currentUser()"
+  <div *ngIf="userWasFound()"
        class="col-8">
     <h3>Usuario</h3>
-    <p>Email: {{ currentUser()!.email }}</p>
-    <p>Nombre:</p>
+    <p>Email: {{ currentUser()?.email }}</p>
+    <p>Nombre: {{ fullName() }}</p>
     <img [src]="currentUser()!.avatar"
          alt="Avatar"
          class="rounded">
   </div>
 
-  <div *ngIf="!currentUser()"
+  <div *ngIf="!userWasFound()"
        class="col-8 text-danger">
     <h3>Usuario no encontrado</h3>
   </div>
