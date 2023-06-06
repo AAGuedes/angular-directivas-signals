@@ -25,4 +25,16 @@
   <div class="col-6">
     <pre>{{ user() | json }}</pre>
   </div>
+
+  <hr>
+
+  <div class="col-6">
+    <button (click)="increaseBy(+1)" class="btn btn-primary">
+      + 1
+    </button>
+  </div>
+
+  <div class="col-6">
+    <pre>{{ user().first_name }} {{ counter() }}</pre>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, WritableSignal, signal } from '@angular/core';
+import { Component, EffectRef, WritableSignal, effect, signal } from '@angular/core';
 import { User } from '../../interfaces/user-request.interface';
 
 @Component({
@@ -8,6 +8,8 @@ import { User } from '../../interfaces/user-request.interface';
 })
 export class PropertiesPageComponent {
 
+  public counter: WritableSignal<number> = signal(0);
+
   public user: WritableSignal<User> = signal<User>({
     id: 1,
     email: "george.bluth@reqres.in",
@@ -16,23 +18,27 @@ export class PropertiesPageComponent {
     avatar: "https://reqres.in/img/faces/1-image.jpg"
   });
 
+  public userChangeEffect: EffectRef = effect(() => {
+    console.log(`${this.user().first_name} ${this.counter()}`);
+  })
+
   onFieldUpdated(field: keyof User, value: string): void {
-    this.user.mutate(mutate => {
+    this.user.mutate(current => {
       switch(field) {
         case 'id':
-          mutate.id = Number(value);
+          current.id = Number(value);
           break;
         case 'email':
-          mutate.email = value;
+          current.email = value;
           break;
         case 'first_name':
-          mutate.first_name = value;
+          current.first_name = value;
           break;
         case 'last_name':
-          mutate.last_name = value;
+          current.last_name = value;
           break;
         case 'avatar':
-          mutate.avatar = value;
+          current.avatar = value;
           break;
       }
     });
@@ -50,4 +56,7 @@ export class PropertiesPageComponent {
     // });
   }
 
+  increaseBy(value: number): void {
+    this.counter.update(current => current + value)
+  }
 }
